@@ -1,12 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
+    const { user } = useAuth();
     return (
         <header className="p-4 bg-[#2C3E50] text-white dark:bg-gray-100 dark:text-gray-800">
             <div className="container flex justify-between h-16 mx-auto">
                 <div className="flex">
                     <Link to={'/'} className="flex items-center p-2">
-                       <h2 className="text-3xl font-bold hover:text-[#4C4C4C]">NewsWave</h2>
+                        <h2 className="text-3xl font-bold hover:text-[#4C4C4C]">NewsWave</h2>
                     </Link>
                     <ul className="items-stretch hidden space-x-3 lg:flex font-medium ">
                         <li className="flex">
@@ -33,7 +35,17 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="items-center flex-shrink-0 hidden lg:flex">
-                    <button className="px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50 btn border-none">Log in</button>
+                    {user ? (
+                        <>
+                            <li><Link to="/profile"><img src={user.photo} alt="User Profile" /></Link></li>
+                            <li><button>Logout</button></li>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login"><button className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 mr-4">Log in</button></Link>
+                           <Link to="/register"><button className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50">Register</button></Link>
+                        </>
+                    )}
                 </div>
                 <button className="p-4 lg:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-gray-800">
