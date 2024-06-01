@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -8,27 +8,27 @@ const Navbar = () => {
                     <Link to={'/'} className="flex items-center p-2">
                        <h2 className="text-3xl font-bold hover:text-[#4C4C4C]">NewsWave</h2>
                     </Link>
-                    <ul className="items-stretch hidden space-x-3 lg:flex font-medium">
+                    <ul className="items-stretch hidden space-x-3 lg:flex font-medium ">
                         <li className="flex">
-                            <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 dark:border-b-2 dark:border-">Home </a>
+                            <NavLink to={'/'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Home </NavLink>
                         </li>
                         <li className="flex">
-                            <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 dark:border-b-2 dark:border- dark:text-violet-600 dark:border-violet-600">Add Articles</a>
+                            <NavLink to={'/addArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Add Articles</NavLink>
                         </li>
                         <li className="flex">
-                            <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 dark:border-b-2 dark:border-">All Articles</a>
+                            <NavLink to={'/allArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>All Articles</NavLink>
                         </li>
                         <li className="flex">
-                            <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 dark:border-b-2 dark:border-">Subscription</a>
+                            <NavLink to={'/subscription'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Subscription</NavLink>
                         </li>
                         <li className="flex">
-                            <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 dark:border-b-2 dark:border-">Dashboard</a>
+                            <NavLink to={'/dashboard'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Dashboard</NavLink>
                         </li>
                         <li className="flex">
-                            <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 dark:border-b-2 dark:border-">My Articles</a>
+                            <NavLink to={'/myArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>My Articles</NavLink>
                         </li>
                         <li className="flex">
-                            <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 dark:border-b-2 dark:border-">Premium Articles</a>
+                            <NavLink to={'/premiumArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Premium Articles</NavLink>
                         </li>
                     </ul>
                 </div>
