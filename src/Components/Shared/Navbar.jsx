@@ -2,7 +2,17 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
-    const { user } = useAuth();
+    const { user, logOut } = useAuth();
+    const handleLogOut = () => {
+        logOut()
+            .then(res => {
+                console.log(res);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     return (
         <header className="p-4 bg-[#2C3E50] text-white dark:bg-gray-100 dark:text-gray-800">
             <div className="container flex justify-between h-16 mx-auto">
@@ -37,13 +47,14 @@ const Navbar = () => {
                 <div className="items-center flex-shrink-0 hidden lg:flex">
                     {user ? (
                         <>
-                            <li><Link to="/profile"><img src={user.photo} alt="User Profile" /></Link></li>
-                            <li><button>Logout</button></li>
+                            <Link to="/profile"><img className="mr-4 w-[50px]" referrerPolicy="no-referrer" src={user?.photoURL}   alt="User Profile" />
+                            </Link>
+                            <button onClick={handleLogOut} className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 mr-4">Logout</button>
                         </>
                     ) : (
                         <>
                             <Link to="/login"><button className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 mr-4">Log in</button></Link>
-                           <Link to="/register"><button className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50">Register</button></Link>
+                            <Link to="/register"><button className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50">Register</button></Link>
                         </>
                     )}
                 </div>
