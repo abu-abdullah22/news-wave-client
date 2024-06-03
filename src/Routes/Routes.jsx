@@ -9,6 +9,7 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import AllUsers from "../Pages/Dashboard/AllUsers";
 import AllArticlesApproval from "../Pages/Dashboard/AllArticlesApproval";
 import AddPublishers from "../Pages/Dashboard/AddPublishers";
+import AdminRoute from "./AdminRoute";
 
 
 const router = createBrowserRouter([
@@ -40,15 +41,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'allUsers',
-        element: <AllUsers></AllUsers>
+        element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
       },
       {
         path: 'allArticlesApproval',
-        element: <AllArticlesApproval></AllArticlesApproval>
+        element: <AdminRoute><AllArticlesApproval></AllArticlesApproval></AdminRoute>
       },
       {
         path: 'addPublishers',
-        element: <AddPublishers></AddPublishers>
+        element: <AdminRoute><AddPublishers></AddPublishers></AdminRoute>
       }
     ]
   }

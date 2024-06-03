@@ -25,7 +25,6 @@ const AllUsers = () => {
     }
     return (
         <div>
-            <h2>All users here ; {users.length}</h2>
             <div className="flex justify-evenly my-4">
                 <h2 className="text-3xl">All Users </h2>
                 <h2 className="text-3xl">Total Users : {users.length} </h2>
@@ -51,7 +50,7 @@ const AllUsers = () => {
                                 <td>{user.email}</td>
                                 <td>
                                     <td>
-                                        {user.role === 'admin' ? 'Admin' : <button onClick={() => hanldeMakeAdmin(user)} className="btn btn-lg bg-[#D1A054]"><FaUsers className="text-white text-xl"></FaUsers></button>}
+                                        {user.role === 'admin' ? 'Admin' : <button onClick={() => hanldeMakeAdmin(user)} className="btn bg-[#7C3AED]"><FaUsers className="text-white text-xl"></FaUsers></button>}
                                     </td>
                                 </td>
 
