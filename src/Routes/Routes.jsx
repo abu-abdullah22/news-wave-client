@@ -5,6 +5,10 @@ import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import AddAritcles from "../Pages/AddAritcles";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import AllUsers from "../Pages/Dashboard/AllUsers";
+import AllArticlesApproval from "../Pages/Dashboard/AllArticlesApproval";
+import AddPublishers from "../Pages/Dashboard/AddPublishers";
 
 
 const router = createBrowserRouter([
@@ -30,6 +34,24 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: '/dashboard',
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: 'allUsers',
+        element: <AllUsers></AllUsers>
+      },
+      {
+        path: 'allArticlesApproval',
+        element: <AllArticlesApproval></AllArticlesApproval>
+      },
+      {
+        path: 'addPublishers',
+        element: <AddPublishers></AddPublishers>
+      }
+    ]
+  }
 ]);
 
 export default router;

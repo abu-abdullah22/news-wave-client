@@ -2,7 +2,7 @@ import { toast } from 'react-hot-toast';
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAdmin";
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 const Register = () => {
     const {createUser, updateUserProfile, googleSignIn} = useAuth() ;
