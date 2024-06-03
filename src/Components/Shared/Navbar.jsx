@@ -33,9 +33,9 @@ const Navbar = () => {
                         <li className="flex">
                             <NavLink to={'/'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Home</NavLink>
                         </li>
-                        <li className="flex">
+                      { user && <li className="flex">
                             <NavLink to={'/addArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Add Articles</NavLink>
-                        </li>
+                        </li>}
                         <li className="flex">
                             <NavLink to={'/allArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>All Articles</NavLink>
                         </li>
@@ -45,9 +45,9 @@ const Navbar = () => {
                        {user && isAdmin &&  <li className="flex">
                             <NavLink to={'/dashboard'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Dashboard</NavLink>
                         </li>}
-                        <li className="flex">
+                        { user && <li className="flex">
                             <NavLink to={'/myArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>My Articles</NavLink>
-                        </li>
+                        </li>}
                         <li className="flex">
                             <NavLink to={'/premiumArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Premium Articles</NavLink>
                         </li>
