@@ -6,6 +6,8 @@ const Navbar = () => {
     const { user, logOut } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const isAdmin = true ;
+
     const handleLogOut = () => {
         logOut()
             .then(res => {
@@ -40,9 +42,9 @@ const Navbar = () => {
                         <li className="flex">
                             <NavLink to={'/subscription'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Subscription</NavLink>
                         </li>
-                        <li className="flex">
+                       {user && isAdmin &&  <li className="flex">
                             <NavLink to={'/dashboard'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Dashboard</NavLink>
-                        </li>
+                        </li>}
                         <li className="flex">
                             <NavLink to={'/myArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>My Articles</NavLink>
                         </li>

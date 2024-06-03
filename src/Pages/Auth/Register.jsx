@@ -1,29 +1,47 @@
-
+import { toast } from 'react-hot-toast';
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAdmin";
 
 const Register = () => {
     const {createUser, updateUserProfile, googleSignIn} = useAuth() ;
-    const navigate = useNavigate()
+    const navigate = useNavigate() ;
+    const axiosPublic = useAxiosPublic() ;
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
 
-    const onSubmit = data => {
-        console.log(data);
-        createUser(data.email, data.password) 
-        .then(res=> {
-            const loggedUser = res.user ;
-            console.log(loggedUser);
-            updateUserProfile(data.name, data.photo) ;
-            navigate('/') ;          
-        })
-       
-    }
 
+    const onSubmit = async (data) => {
+        try {
+            const res = await createUser(data.email, data.password);
+            const loggedUser = res.user ;
+    
+            await updateUserProfile(loggedUser.displayName, loggedUser.photoURL);
+    
+            const userInfo = {
+                name: data.name,
+                email: data.email
+            };
+    
+            const response = await axiosPublic.post('/users', userInfo);
+            console.log('User added to the database:', response.data);
+    
+            if (response.data.insertedId) {
+                toast.success('Sign Up Successful!');
+                navigate('/')
+            } else {
+                throw new Error('User was not inserted into the database');
+            }
+        } catch (error) {
+            console.log('Error during sign up:', error);
+            toast.error(error.message || 'Sign up failed. Please try again.');
+        }
+    };
+    
  const handleGoogleLogin = ()=> {
     googleSignIn()
     .then(res=> {
