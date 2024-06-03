@@ -24,7 +24,8 @@ const Register = () => {
     
             const userInfo = {
                 name: data.name,
-                email: data.email
+                email: data.email,
+                photo: data.photo,
             };
     
             const response = await axiosPublic.post('/users', userInfo);
@@ -42,12 +43,30 @@ const Register = () => {
         }
     };
     
- const handleGoogleLogin = ()=> {
-    googleSignIn()
-    .then(res=> {
-        console.log(res);
-        navigate('/')
-    })
+ const handleGoogleLogin = async()=> {
+    try {
+        const res = await googleSignIn();
+        const user = res.user;
+
+        const userInfo = {
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL
+        };
+
+        const response = await axiosPublic.post('/users', userInfo);
+        console.log('User added to the database:', response.data);
+
+        if (response.data.insertedId) {
+            toast.success('Google Sign-In Successful!');
+            navigate('/')
+        } else {
+            throw new Error('User was not inserted into the database');
+        }
+    } catch (error) {
+        console.log('Error during Google Sign-In:', error);
+        toast.error(error.message || 'Google Sign-In failed. Please try again.');
+    }
  }
 
 
