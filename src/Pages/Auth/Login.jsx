@@ -1,10 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const Login = () => {
     const { signIn, googleSignIn } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     const {
         register,
         handleSubmit,
@@ -16,14 +20,16 @@ const Login = () => {
        signIn(data.email, data.password)
        .then(res=> {
         console.log(res.user);
-        navigate('/')
+        navigate(from, { replace: true })
+        toast.success('Log In Successful!')
        })
     }
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(res => {
                 console.log(res);
-                navigate('/')
+                navigate(from, { replace: true })
+                toast.success('Log In Successful!')
             })
     }
 
