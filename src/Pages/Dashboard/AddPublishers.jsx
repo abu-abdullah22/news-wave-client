@@ -1,16 +1,40 @@
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY ;
+const image_hosting_api= `https://api.imgbb.com/1/upload?key=${image_hosting_key}` ;
 
 const AddPublishers = () => {
     const {
         register,
-        handleSubmit,
+        handleSubmit, reset,
         formState: { errors },
     } = useForm();
+    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
-    const onSubmit = async () => {
-
-    }
+    const onSubmit = async (data) => {
+        console.log(data);
+        const image = data.image[0]
+		const formData = new FormData() // Create a new FormData object
+		formData.append('image', image) // Append the photo file to the FormData object
+        console.log(image, formData);
+        const res =  await axiosPublic.post(image_hosting_api, formData) ;
+        console.log(res);
+        if(res.data.success){
+         const publisherItem = {
+           name : data.name , 
+           image: res.data.data.display_url ,
+         }
+         const pubRes = await axiosSecure.post('/publishers', publisherItem)
+         if(pubRes.data.insertedId){
+         toast.success('Publisher has been added successfully!')
+         reset() ;
+         }
+        } 
+       }
     return (
         <div>
             <h2 className="text-3xl text-center"> Add Publisher</h2>
@@ -23,10 +47,11 @@ const AddPublishers = () => {
                     </div>
 
                     <div className="form-control w-full my-6">
-                        <input {...register('image', { required: true })} type="file" className="file-input file-input-bordered w-full max-w-xs" />
+                        <label htmlFor="logo" className="block text-sm">Publisher Logo</label>
+                        <input {...register('image', { required: true })}  type="file" className="file-input file-input-bordered w-full max-w-xs" />
                     </div>
                 </div>
-                <input type="submit" className="w-full btn border-none px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50" value={'Sign Up'}></input>
+                <input type="submit" className="w-full btn border-none px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50" value={'Add Publisher'}></input>
             </form>
         </div>
     );
