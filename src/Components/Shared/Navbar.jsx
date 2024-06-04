@@ -43,7 +43,7 @@ const Navbar = () => {
                             <NavLink to={'/subscription'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Subscription</NavLink>
                         </li>
                        {user && isAdmin &&  <li className="flex">
-                            <NavLink to={'/dashboard/allUsers'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Dashboard</NavLink>
+                            <NavLink to={'/dashboard'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Dashboard</NavLink>
                         </li>}
                         { user && <li className="flex">
                             <NavLink to={'/myArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>My Articles</NavLink>
