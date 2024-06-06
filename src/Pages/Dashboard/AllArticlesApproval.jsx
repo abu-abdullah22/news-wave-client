@@ -1,15 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { FaTrash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const AllArticlesApproval = () => {
     const axiosSecure = useAxiosSecure();
-    const {data: articles = []} = useQuery({
+    const {data: articles = [],refetch} = useQuery({
         queryKey: ['articles'],
         queryFn: async()=> {
             const res = await axiosSecure.get('/articles');
             return res.data ;
         }
     })
+
+    
+    const hanldeApprove = article => {
+        console.log(article);
+        axiosSecure.patch(`/articles/admin/${article._id}`)
+        .then(res => {
+            console.log(res.data);
+            if(res.data.modifiedCount > 0) {
+                refetch() ;
+               toast.success('Article Approved')      
+            }
+        }) ;
+    }
     return (
         <div>
             <div>
@@ -29,6 +44,7 @@ const AllArticlesApproval = () => {
                             <th>Author Image</th>
                             <th>Posted Date</th>
                             <th>Status</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,6 +56,8 @@ const AllArticlesApproval = () => {
                                 <td>{article.author_email}</td>
                                 <td><img src={article.author_image} referrerPolicy="no-referrer" className="w-[60px]" alt="" /></td>
                                 <td>{article.postedDate.split('T')[0]}</td>
+                                <td>{article.status == 'approved' ? 'Approved': <button onClick={()=> hanldeApprove(article)} className="btn">pending</button>}</td>
+                                <td><FaTrash /> </td>
                             </tr>)
 
                         }
