@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const isAdmin = true ;
+    const [isAdmin] = useAdmin();
 
     const handleLogOut = () => {
         logOut()

@@ -2,11 +2,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Login = () => {
     const { signIn, googleSignIn } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const axiosPublic = useAxiosPublic();
     const from = location.state?.from?.pathname || '/';
 
     const {
@@ -24,14 +26,28 @@ const Login = () => {
         toast.success('Log In Successful!')
        })
     }
-    const handleGoogleLogin = () => {
-        googleSignIn()
-            .then(res => {
-                console.log(res);
-                navigate(from, { replace: true })
-                toast.success('Log In Successful!')
-            })
-    }
+     
+    const handleGoogleLogin = async()=> {
+        try {
+            const res = await googleSignIn();
+            const user = res.user;
+    
+            const userInfo = {
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+            };
+    
+            const response = await axiosPublic.post('/users', userInfo);
+    
+            if (response.data.insertedId) {
+                toast.success('Google Sign-In Successful!');
+                navigate('/')
+            }
+        } catch (error) {
+            toast.error(error.message || 'Google Sign-In failed. Please try again.');
+        }
+     }
 
     return (
         <div className="w-full my-20 container mx-auto max-w-md p-4 rounded-md shadow sm:p-8 dark:bg-gray-50 dark:text-gray-800">

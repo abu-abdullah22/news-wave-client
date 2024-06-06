@@ -34,9 +34,7 @@ const Register = () => {
             if (response.data.insertedId) {
                 toast.success('Sign Up Successful!');
                 navigate('/')
-            } else {
-                throw new Error('User was not inserted into the database');
-            }
+            } 
         } catch (error) {
             console.log('Error during sign up:', error);
             toast.error(error.message || 'Sign up failed. Please try again.');
@@ -55,14 +53,11 @@ const Register = () => {
         };
 
         const response = await axiosPublic.post('/users', userInfo);
-        console.log('User added to the database:', response.data);
 
         if (response.data.insertedId) {
             toast.success('Google Sign-In Successful!');
             navigate('/')
-        } else {
-            throw new Error('User was not inserted into the database');
-        }
+        } 
     } catch (error) {
         console.log('Error during Google Sign-In:', error);
         toast.error(error.message || 'Google Sign-In failed. Please try again.');

@@ -4,6 +4,7 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../Hooks/useAuth";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -20,6 +21,7 @@ const AddArticles = () => {
   const { register, handleSubmit, control, reset, formState: { errors } } = useForm();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
+  const {user} = useAuth() ;
 
   const { data: publishers = [] } = useQuery({
     queryKey: ['publishers'],
@@ -30,23 +32,29 @@ const AddArticles = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     const image = data.image[0];
     const formData = new FormData();
     formData.append('image', image);
-    console.log(image, formData);
+    // console.log(image, formData);
     const res = await axiosPublic.post(image_hosting_api, formData);
-    console.log(res);
+    // console.log(res);
     if (res.data.success) {
+      const currentDateTime = new Date().toISOString();
       const articleItem = {
         title: data.title,
         image: res.data.data.display_url,
         description: data.description,
         publisher: data.publisher,
         tags: data.tags.map(tag => tag.value), 
+        author_email: user?.email, 
+        author_name: user?.displayName,
+        author_image: user?.photoURL,
+        postedDate : currentDateTime,
+       
       };
-      const pubRes = await axiosSecure.post('/articles', articleItem);
-      if (pubRes.data.insertedId) {
+      const articleRes = await axiosSecure.post('/articles', articleItem);
+      if (articleRes.data.insertedId) {
         toast.success('Article has been added successfully!');
         reset();
       }
@@ -82,7 +90,7 @@ const AddArticles = () => {
             <label className="block text-sm">Publisher</label>
             <select {...register("publisher", { required: true })} className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600">
               {publishers.map((publisher) => (
-                <option key={publisher.id} value={publisher.name}>{publisher.name}</option>
+                <option key={publisher._id} value={publisher.name}>{publisher.name}</option>
               ))}
             </select>
             {errors.publisher && <span className="text-sm">This field is required</span>}
@@ -106,6 +114,8 @@ const AddArticles = () => {
             />
             {errors.tags && <span className="text-sm">This field is required</span>}
           </div>
+
+
         </div>
         <input type="submit" className="w-full btn border-none px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50" value={'Add Article'} />
       </form>
