@@ -1,10 +1,10 @@
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;

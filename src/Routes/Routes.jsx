@@ -3,13 +3,14 @@ import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
-import AddAritcles from "../Pages/AddAritcles";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import AllUsers from "../Pages/Dashboard/AllUsers";
 import AllArticlesApproval from "../Pages/Dashboard/AllArticlesApproval";
 import AddPublishers from "../Pages/Dashboard/AddPublishers";
 import AdminRoute from "./AdminRoute";
+import AddArticles from "../Pages/user/AddAritcles";
+import AllArticles from "../Pages/user/AllArticles";
 
 
 const router = createBrowserRouter([
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/addArticles',
-        element: <PrivateRoute><AddAritcles></AddAritcles></PrivateRoute>
+        element: <PrivateRoute><AddArticles /></PrivateRoute>
+      },
+      {
+        path: '/allArticles',
+        element: <AllArticles></AllArticles>
       }
     ]
   },
