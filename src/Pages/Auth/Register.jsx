@@ -18,9 +18,9 @@ const Register = () => {
     const onSubmit = async (data) => {
         try {
             const res = await createUser(data.email, data.password);
-            const loggedUser = res.user ;
+            console.log(res.data);
     
-            await updateUserProfile(loggedUser.displayName, loggedUser.photoURL);
+            await updateUserProfile(data.name, data.photo);
     
             const userInfo = {
                 name: data.name,
