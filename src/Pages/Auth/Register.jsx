@@ -41,29 +41,34 @@ const Register = () => {
         }
     };
     
- const handleGoogleLogin = async()=> {
-    try {
-        const res = await googleSignIn();
-        const user = res.user;
-
-        const userInfo = {
-            name: user.displayName,
-            email: user.email,
-            photo: user.photoURL
-        };
-
-        const response = await axiosPublic.post('/users', userInfo);
-
-        if (response.data.insertedId) {
-            toast.success('Google Sign-In Successful!');
-            navigate('/')
-        } 
-    } catch (error) {
-        console.log('Error during Google Sign-In:', error);
-        toast.error(error.message || 'Google Sign-In failed. Please try again.');
+    const handleGoogleLogin = async () => {
+        try {
+            const res = await googleSignIn();
+            const user = res.user;
+    
+            const userInfo = {
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+            };
+    
+            const existingUserResponse = await axiosPublic.get(`/users/${user.email}`);
+            
+            if (existingUserResponse.data) {
+                toast.success('Google log in Successful!');
+                navigate('/');
+            } else {
+                const response = await axiosPublic.post('/users', userInfo);
+    
+                if (response.data.insertedId) {
+                    toast.success('Google log in Successful!');
+                    navigate('/');
+                }
+            }
+        } catch (error) {
+            toast.error(error.message || 'Google log in failed. Please try again.');
+        }
     }
- }
-
 
 
     return (
