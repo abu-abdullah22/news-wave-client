@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const AllArticlesApproval = () => {
     const axiosSecure = useAxiosSecure();
@@ -51,6 +52,28 @@ const AllArticlesApproval = () => {
                     toast.success('Article made premium!');
                 }
             });
+    };
+    const handleDelete = article => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/articles/admin/delete/${article._id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            toast.success('Article Deleted!')
+                        }
+                    })
+
+            }
+        });
     }
 
     return (
@@ -88,8 +111,8 @@ const AllArticlesApproval = () => {
                                 <td>{article.status === 'approved' ? 'Approved' : article.status === 'declined' ? 'Declined' : 'Pending'}</td>
                                 <td>{article.status === 'approved' ? 'Approved' : <button onClick={() => handleApprove(article)} className="btn">Approve</button>}</td>
                                 <td>{article.status === 'declined' ? 'Declined' : <button onClick={() => handleDecline(article)} className="btn">Decline</button>}</td>
-                                <td>{article.premium ? 'Premium' : <button onClick={()=>handlePremium(article)} className="btn" disabled={article.status === 'declined'}>Make Premium</button>}</td>
-                                <td><FaTrash /></td>
+                                <td>{article.premium ? 'Premium' : <button onClick={() => handlePremium(article)} className="btn" disabled={article.status === 'declined'}>Make Premium</button>}</td>
+                                <td><button className="btn" onClick={() => handleDelete(article)}><FaTrash /></button></td>
                             </tr>
                         ))}
                     </tbody>
