@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useAdmin = () => {
-    const { user } = useAuth();
+    const { user,loading } = useAuth();
     const axiosSecure = useAxiosSecure();
 
     const { data: isAdmin, isLoading: isAdminLoading } = useQuery({
@@ -17,7 +17,7 @@ const useAdmin = () => {
             }
             return false;
         },
-        enabled: !!user?.email, 
+        enabled:!loading, 
     });
 
     return [isAdmin, isAdminLoading];

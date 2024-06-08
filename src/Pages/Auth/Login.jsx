@@ -27,7 +27,7 @@ const Login = () => {
        })
     }
      
-    const handleGoogleLogin = async()=> {
+    const handleGoogleLogin = async () => {
         try {
             const res = await googleSignIn();
             const user = res.user;
@@ -38,17 +38,24 @@ const Login = () => {
                 photo: user.photoURL
             };
     
-            const response = await axiosPublic.post('/users', userInfo);
+            const existingUserResponse = await axiosPublic.get(`/users/${user.email}`);
+            
+            if (existingUserResponse.data) {
+                toast.success('Google log in Successful!');
+                navigate('/');
+            } else {
+                const response = await axiosPublic.post('/users', userInfo);
     
-            if (response.data.insertedId) {
-                toast.success('Google Sign-In Successful!');
-                navigate('/')
+                if (response.data.insertedId) {
+                    toast.success('Google log in Successful!');
+                    navigate('/');
+                }
             }
         } catch (error) {
-            toast.error(error.message || 'Google Sign-In failed. Please try again.');
+            toast.error(error.message || 'Google log in failed. Please try again.');
         }
-     }
-
+    }
+    
     return (
         <div className="w-full my-20 container mx-auto max-w-md p-4 rounded-md shadow sm:p-8 dark:bg-gray-50 dark:text-gray-800">
             <h2 className="mb-3 text-3xl font-semibold text-center">Sign In</h2>
