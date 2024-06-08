@@ -36,12 +36,22 @@ const AllArticlesApproval = () => {
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    toast.success('Article Declined');
+                    toast.success('Article Declined!');
                     setSelectedArticle(null);
                     setDeclineReason("");
                 }
             });
     };
+
+    const handlePremium = article => {
+        axiosSecure.patch(`/articles/admin/premium/${article._id}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    toast.success('Article made premium!');
+                }
+            });
+    }
 
     return (
         <div>
@@ -60,7 +70,9 @@ const AllArticlesApproval = () => {
                             <th>Author Image</th>
                             <th>Posted Date</th>
                             <th>Status</th>
+                            <th>Approve</th>
                             <th>Decline</th>
+                            <th>Premium</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -73,8 +85,10 @@ const AllArticlesApproval = () => {
                                 <td>{article.author_email}</td>
                                 <td><img src={article.author_image} referrerPolicy="no-referrer" className="w-[60px]" alt="" /></td>
                                 <td>{article.postedDate.split('T')[0]}</td>
-                                <td>{article.status === 'approved' ? 'Approved' : article.status === 'declined' ? 'Declined' : <button onClick={() => handleApprove(article)} className="btn">pending</button>}</td>
+                                <td>{article.status === 'approved' ? 'Approved' : article.status === 'declined' ? 'Declined' : 'Pending'}</td>
+                                <td>{article.status === 'approved' ? 'Approved' : <button onClick={() => handleApprove(article)} className="btn">Approve</button>}</td>
                                 <td>{article.status === 'declined' ? 'Declined' : <button onClick={() => handleDecline(article)} className="btn">Decline</button>}</td>
+                                <td>{article.premium ? 'Premium' : <button onClick={()=>handlePremium(article)} className="btn" disabled={article.status === 'declined'}>Make Premium</button>}</td>
                                 <td><FaTrash /></td>
                             </tr>
                         ))}
