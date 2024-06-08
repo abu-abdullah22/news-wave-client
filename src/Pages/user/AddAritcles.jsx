@@ -117,7 +117,7 @@ const AddArticles = () => {
 
 
         </div>
-        <input type="submit" className="w-full btn border-none px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50" value={'Add Article'} />
+        <input type="submit" className="btn border-none px-8  font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50" value={'Add Article'} />
       </form>
     </div>
   );
