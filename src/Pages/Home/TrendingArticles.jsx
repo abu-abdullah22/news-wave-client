@@ -6,27 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
 
-const NextArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "gray", borderRadius: "50%" }}
-      onClick={onClick}
-    />
-  );
-};
-
-const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "gray", borderRadius: "50%" }}
-      onClick={onClick}
-    />
-  );
-};
 
 const TrendingArticles = () => {
   const axiosPublic = useAxiosPublic();
@@ -53,8 +32,9 @@ const TrendingArticles = () => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    autoplay: true,
+    arrows: false,
+    autoplayspeed: 1,
     responsive: [
       {
         breakpoint: 1024,
