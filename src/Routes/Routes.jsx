@@ -15,6 +15,7 @@ import MyArticles from "../Pages/user/MyArticles";
 import PremiumArticles from "../Premium/PremiumArticles";
 import Error from '../Pages/Error/Error'
 import ArticleDetails from "../Pages/user/ArticleDetails";
+import Admin from "../Pages/Dashboard/Admin";
 
 
 const router = createBrowserRouter([
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: 'addPublishers',
         element: <AdminRoute><AddPublishers></AddPublishers></AdminRoute>
+      },
+      {
+        path: 'admin',
+        element: <AdminRoute><Admin></Admin></AdminRoute>
       }
     ]
   }

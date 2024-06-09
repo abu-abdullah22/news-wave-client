@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const AllArticlesApproval = () => {
     const axiosSecure = useAxiosSecure();
@@ -17,6 +17,8 @@ const AllArticlesApproval = () => {
 
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [declineReason, setDeclineReason] = useState("");
+
+ 
 
     const handleApprove = article => {
         axiosSecure.patch(`/articles/admin/${article._id}`)
@@ -53,6 +55,7 @@ const AllArticlesApproval = () => {
                 }
             });
     };
+
     const handleDelete = article => {
         Swal.fire({
             title: "Are you sure?",
@@ -71,10 +74,9 @@ const AllArticlesApproval = () => {
                             toast.success('Article Deleted!')
                         }
                     })
-
             }
         });
-    }
+    };
 
     return (
         <div>
@@ -136,6 +138,8 @@ const AllArticlesApproval = () => {
                     </div>
                 </div>
             )}
+
+            
         </div>
     );
 };
