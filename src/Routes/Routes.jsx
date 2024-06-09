@@ -16,6 +16,7 @@ import PremiumArticles from "../Premium/PremiumArticles";
 import Error from '../Pages/Error/Error'
 import ArticleDetails from "../Pages/user/ArticleDetails";
 import Admin from "../Pages/Dashboard/Admin";
+import UpdateArticle from "../Pages/user/UpdateArticle";
 
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: '/article/:id',
         element:<PrivateRoute><ArticleDetails></ArticleDetails></PrivateRoute>, 
+      },
+      {
+        path: '/update/:id',
+        element: <PrivateRoute><UpdateArticle></UpdateArticle></PrivateRoute>
       }
     ]
   },

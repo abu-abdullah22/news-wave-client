@@ -15,7 +15,7 @@ const PremiumArticles = () => {
         <div className="container mx-auto p-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {articles.map(article => (
-                    <div key={article._id} className="border rounded-lg shadow-lg p-4">
+                    <div key={article._id} className="border rounded-lg shadow-lg p-4 bg-white">
                         <img src={article.image} alt={article.title} className="w-full h-48 object-cover rounded-lg mb-4" />
                         <h2 className="text-xl font-bold mb-2">{article.title}</h2>
                         <p className="text-sm font-medium text-gray-600 mb-4">{article.publisher}</p>

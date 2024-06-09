@@ -47,7 +47,7 @@ const ArticleDetails = () => {
           <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full mr-2">{tag}</span>
         ))}
       </div>
-      <p className="text-gray-700">{article.description}</p>
+      <p className="text-gray-700 dark:text-gray-50">{article.description}</p>
     </div>
   );
 };

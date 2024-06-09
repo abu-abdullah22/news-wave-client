@@ -5,6 +5,8 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -17,11 +19,11 @@ const tagsOptions = [
   { value: 'entertainment', label: 'Entertainment' },
 ];
 
-const AddArticles = () => {
+const UpdateArticle = () => {
   const { register, handleSubmit, control, reset, formState: { errors } } = useForm();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
-  const {user} = useAuth() ;
+  const { user } = useAuth();
 
   const { data: publishers = [] } = useQuery({
     queryKey: ['publishers'],
@@ -31,39 +33,75 @@ const AddArticles = () => {
     }
   });
 
+  const { id } = useParams();
+
+  const { data: article, isLoading, error } = useQuery({
+    queryKey: ['article', id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/article/${id}`);
+      return res.data;
+    },
+  });
+
+  useEffect(() => {
+    if (article) {
+      reset({
+        title: article.title,
+        description: article.description,
+        publisher: article.publisher,
+        tags: article.tags.map(tag => ({ value: tag, label: tag })),
+      });
+    }
+  }, [article, reset]);
+
   const onSubmit = async (data) => {
-    // console.log(data);
-    const image = data.image[0];
-    const formData = new FormData();
-    formData.append('image', image);
-    // console.log(image, formData);
-    const res = await axiosPublic.post(image_hosting_api, formData);
-    // console.log(res);
-    if (res.data.success) {
-      const currentDateTime = new Date().toISOString();
-      const articleItem = {
-        title: data.title,
-        image: res.data.data.display_url,
-        description: data.description,
-        publisher: data.publisher,
-        tags: data.tags.map(tag => tag.value), 
-        author_email: user?.email, 
-        author_name: user?.displayName,
-        author_image: user?.photoURL,
-        postedDate : currentDateTime,
-       
-      };
-      const articleRes = await axiosSecure.post('/articles', articleItem);
-      if (articleRes.data.insertedId) {
-        toast.success('Article has been added successfully!');
-        reset();
+    let imageUrl = article.image; 
+
+    if (data.image.length > 0) { 
+      const image = data.image[0];
+      const formData = new FormData();
+      formData.append('image', image);
+      const res = await axiosPublic.post(image_hosting_api, formData);
+      if (res.data.success) {
+        imageUrl = res.data.data.display_url;
       }
+    }
+
+    const currentDateTime = new Date().toISOString();
+    const articleItem = {
+      title: data.title,
+      image: imageUrl,
+      description: data.description,
+      publisher: data.publisher,
+      tags: data.tags.map(tag => tag.value),
+      author_email: user?.email,
+      author_name: user?.displayName,
+      author_image: user?.photoURL,
+      postedDate: currentDateTime,
+    };
+
+    const articleRes = await axiosSecure.put(`/update/${id}`, articleItem);
+    if (articleRes.data.modifiedCount > 0) {
+      toast.success('Article has been updated successfully!');
+      reset();
     }
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading article: {error.message}</div>;
+  }
+
+  if (!article) {
+    return <div>No article found</div>;
+  }
+
   return (
     <div>
-      <h2 className="text-3xl text-center my-10">ADD Article</h2>
+      <h2 className="text-3xl text-center my-10">Update Article</h2>
       <form className="space-y-8 md:w-1/2 my-20 mx-10 md:mx-auto" onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-4">
           <div className="space-y-2">
@@ -114,13 +152,11 @@ const AddArticles = () => {
             />
             {errors.tags && <span className="text-sm">This field is required</span>}
           </div>
-
-
         </div>
-        <input type="submit" className="btn border-none px-8  font-semibold rounded-md bg-violet-600 text-gray-50" value={'Add Article'} />
+        <input type="submit" className="btn border-none px-8 font-semibold rounded-md bg-violet-600 text-gray-50" value={'Update Article'} />
       </form>
     </div>
   );
 };
 
-export default AddArticles;
+export default UpdateArticle;
