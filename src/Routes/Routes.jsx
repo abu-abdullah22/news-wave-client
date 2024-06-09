@@ -13,12 +13,15 @@ import AddArticles from "../Pages/user/AddAritcles";
 import AllArticles from "../Pages/user/AllArticles";
 import MyArticles from "../Pages/user/MyArticles";
 import PremiumArticles from "../Premium/PremiumArticles";
+import Error from '../Pages/Error/Error'
+import ArticleDetails from "../Pages/user/ArticleDetails";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <Error></Error>,
     children: [
       {
         path: '/',
@@ -47,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: '/premiumArticles',
         element: <PremiumArticles></PremiumArticles>
+      },
+      {
+        path: '/article/:id',
+        element:<PrivateRoute><ArticleDetails></ArticleDetails></PrivateRoute>, 
       }
     ]
   },
