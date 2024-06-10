@@ -17,6 +17,7 @@ import Error from '../Pages/Error/Error'
 import ArticleDetails from "../Pages/user/ArticleDetails";
 import Admin from "../Pages/Dashboard/Admin";
 import UpdateArticle from "../Pages/user/UpdateArticle";
+import Subscription from "../Premium/Subscription";
 
 
 const router = createBrowserRouter([
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: '/update/:id',
         element: <PrivateRoute><UpdateArticle></UpdateArticle></PrivateRoute>
+      },
+      {
+        path: '/subscription',
+        element: <Subscription></Subscription>
       }
     ]
   },
