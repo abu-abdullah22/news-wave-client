@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useAdmin from "../../Hooks/useAdmin";
+import usePremium from "../../Hooks/usePremium";
 
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isAdmin] = useAdmin();
+    const [isPremium] = usePremium() ;
 
     const handleLogOut = () => {
         logOut()
@@ -49,7 +51,7 @@ const Navbar = () => {
                         { user && <li className="flex">
                             <NavLink to={'/myArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>My Articles</NavLink>
                         </li>}
-                      { user &&  <li className="flex">
+                      { user && isPremium && <li className="flex">
                             <NavLink to={'/premiumArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Premium Articles</NavLink>
                         </li>}
                     </ul>
@@ -91,17 +93,17 @@ const Navbar = () => {
                         <li className="flex">
                             <NavLink to={'/allArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 text-[#FFAD21]" : "flex items-center px-4"}>All Articles</NavLink>
                         </li>
-                        <li className="flex">
+                       { user && <li className="flex">
                             <NavLink to={'/subscription'} className={({ isActive }) => isActive ? "flex items-center px-4 text-[#FFAD21]" : "flex items-center px-4"}>Subscription</NavLink>
-                        </li>
-                        <li className="flex">
+                        </li>}
+                       { user && isAdmin && <li className="flex">
                             <NavLink to={'/dashboard'} className={({ isActive }) => isActive ? "flex items-center px-4 text-[#FFAD21]" : "flex items-center px-4"}>Dashboard</NavLink>
-                        </li>
+                        </li>}
                         <li className="flex">
                             <NavLink to={'/myArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 text-[#FFAD21]" : "flex items-center px-4"}>My Articles</NavLink>
                         </li>
                         <li className="flex">
-                            <NavLink to={'/premiumArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 text-[#FFAD21]" : "flex items-center px-4"}>Premium Articles</NavLink>
+                           { user && isPremium && <NavLink to={'/premiumArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 text-[#FFAD21]" : "flex items-center px-4"}>Premium Articles</NavLink>}
                         </li>
                         {user ? (
                             <>
