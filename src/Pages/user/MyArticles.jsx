@@ -52,7 +52,7 @@ const MyArticles = () => {
         });
     };
     return (
-        <div className="container mx-auto p-4 my-10">
+        <div className="container mx-auto p-4 min-h-[80vh] my-20">
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
                     <thead>

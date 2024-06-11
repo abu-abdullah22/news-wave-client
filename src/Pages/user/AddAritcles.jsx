@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 
+
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
@@ -21,7 +22,9 @@ const AddArticles = () => {
   const { register, handleSubmit, control, reset, formState: { errors } } = useForm();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
-  const {user} = useAuth() ;
+  const { user } = useAuth();
+
+
 
   const { data: publishers = [] } = useQuery({
     queryKey: ['publishers'],
@@ -32,13 +35,10 @@ const AddArticles = () => {
   });
 
   const onSubmit = async (data) => {
-    // console.log(data);
     const image = data.image[0];
     const formData = new FormData();
     formData.append('image', image);
-    // console.log(image, formData);
     const res = await axiosPublic.post(image_hosting_api, formData);
-    // console.log(res);
     if (res.data.success) {
       const currentDateTime = new Date().toISOString();
       const articleItem = {
@@ -46,20 +46,35 @@ const AddArticles = () => {
         image: res.data.data.display_url,
         description: data.description,
         publisher: data.publisher,
-        tags: data.tags.map(tag => tag.value), 
-        author_email: user?.email, 
+        tags: data.tags.map(tag => tag.value),
+        author_email: user?.email,
         author_name: user?.displayName,
         author_image: user?.photoURL,
-        postedDate : currentDateTime,
-       
+        postedDate: currentDateTime,
+
       };
-      const articleRes = await axiosSecure.post('/articles', articleItem);
-      if (articleRes.data.insertedId) {
-        toast.success('Article has been added successfully!');
-        reset();
+      try {
+        const articleRes = await axiosSecure.post('/articles', articleItem);
+        if (articleRes.data.error) {
+          toast.error(articleRes.data.error);
+          reset();
+        } else if (articleRes.data.insertedId) {
+          toast.success('Article has been added successfully!');
+          reset();
+        }
+      } catch (error) {
+        console.error('Error submitting article:', error);
+        
+        if (error.response && error.response.data && error.response.data.error) {
+          toast.error(error.response.data.error);
+          reset();
+        } else {
+          toast.error('Failed to add article. Please try again later.');
+          reset();
+        }
       }
-    }
-  };
+  }
+}
 
   return (
     <div>

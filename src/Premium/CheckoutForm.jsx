@@ -67,7 +67,7 @@ const CheckoutForm = () => {
       console.log('[error]', error);
       setError(error.message);
     } else {
-      console.log('[PaymentMethod]', paymentMethod);
+      // console.log('[PaymentMethod]', paymentMethod);
       setError('');
 
       if (!clientSecret) {

@@ -7,7 +7,7 @@ import { useState } from "react";
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
-    const [itemsPerPage] = useState(10); 
+    const [itemsPerPage] = useState(5); 
 
     const { data: usersData, refetch } = useQuery({
         queryKey: ['allUsers', page],
