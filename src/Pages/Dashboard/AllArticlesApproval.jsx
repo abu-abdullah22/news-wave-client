@@ -7,18 +7,21 @@ import { useState } from "react";
 
 const AllArticlesApproval = () => {
     const axiosSecure = useAxiosSecure();
-    const { data: articles = [], refetch } = useQuery({
-        queryKey: ['articles'],
+    const [page, setPage] = useState(1);
+    const [itemsPerPage] = useState(5); // Adjust as needed
+
+    const { data: articlesData, refetch } = useQuery({
+        queryKey: ['articles', page],
         queryFn: async () => {
-            const res = await axiosSecure.get('/articles');
+            const res = await axiosSecure.get(`/articlesApproval?page=${page}&limit=${itemsPerPage}`);
             return res.data;
         }
     });
 
+    const { articles = [], total } = articlesData || {};
+
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [declineReason, setDeclineReason] = useState("");
-
- 
 
     const handleApprove = article => {
         axiosSecure.patch(`/articles/admin/${article._id}`)
@@ -78,11 +81,13 @@ const AllArticlesApproval = () => {
         });
     };
 
+    const totalPages = Math.ceil(total / itemsPerPage);
+
     return (
         <div>
             <div className="flex justify-evenly my-4">
                 <h2 className="text-3xl">All Articles (for approval)</h2>
-                <h2 className="text-3xl">Total articles: {articles.length} </h2>
+                <h2 className="text-3xl">Total articles: {total} </h2>
             </div>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
@@ -104,7 +109,7 @@ const AllArticlesApproval = () => {
                     <tbody>
                         {articles.map((article, index) => (
                             <tr key={article._id}>
-                                <th>{index + 1}</th>
+                                <th>{(page - 1) * itemsPerPage + index + 1}</th>
                                 <td>{article.title}</td>
                                 <td>{article.author_name}</td>
                                 <td>{article.author_email}</td>
@@ -113,7 +118,7 @@ const AllArticlesApproval = () => {
                                 <td>{article.status === 'approved' ? 'Approved' : article.status === 'declined' ? 'Declined' : 'Pending'}</td>
                                 <td>{article.status === 'approved' ? 'Approved' : <button onClick={() => handleApprove(article)} className="btn">Approve</button>}</td>
                                 <td>{article.status === 'declined' ? 'Declined' : <button onClick={() => handleDecline(article)} className="btn">Decline</button>}</td>
-                                <td>{article.premium ? 'Premium' : <button onClick={() => handlePremium(article)} className="btn" disabled={article.status === 'declined'}>Make Premium</button>}</td>
+                                <td>{article.premium ? 'Premium' : <button onClick={() => handlePremium(article)} className="btn">Make Premium</button>}</td>
                                 <td><button className="btn" onClick={() => handleDelete(article)}><FaTrash /></button></td>
                             </tr>
                         ))}
@@ -139,7 +144,17 @@ const AllArticlesApproval = () => {
                 </div>
             )}
 
-            
+            <div className="flex justify-center mt-4">
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index}
+                        className={`btn mx-1 ${page === index + 1 ? "btn-active" : ""}`}
+                        onClick={() => setPage(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };

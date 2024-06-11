@@ -1,10 +1,12 @@
 import Chart from "react-google-charts";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../Hooks/useAuth";
 
 
 const Admin = () => {
     const axiosSecure = useAxiosSecure();
+    const {user} = useAuth() ;
     const { data: articles = [] } = useQuery({
         queryKey: ['articles'],
         queryFn: async () => {
@@ -35,6 +37,7 @@ const Admin = () => {
     ];
     return (
         <div>
+            <h2 className="text-3xl font-medium">Welcome, {user?.displayName}. Here is graphical demonstration of the user interactions.</h2>
             <div className="my-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
