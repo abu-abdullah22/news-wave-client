@@ -12,7 +12,7 @@ const AllPublisher = () => {
     })
     return (
         <div className="container xl:mx-auto mx-2">
-            <h2 className="text-3xl text-center my-10">All Publisher</h2>
+            <h2 className="text-3xl text-center font-bold my-10">All Publisher</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
                 {publishers?.map(publisher =>
                     <div key={publisher._id} className="max-w-xs p-6 rounded-md shadow-md dark:bg-gray-50 dark:text-gray-900">

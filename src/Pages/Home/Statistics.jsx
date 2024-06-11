@@ -10,7 +10,7 @@ const Statistics = () => {
     const { totalUsers, normalUsers, premiumUsers } = data;
 
     return (
-        <div className="statistics-section p-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white container mx-auto">
+        <div className="statistics-section p-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-md container mx-auto">
             <h2 className="text-4xl font-bold text-center mb-8">User Statistics</h2>
             <div className="flex justify-around">
                 <div className="stat flex flex-col items-center bg-white bg-opacity-20 p-6 rounded-lg shadow-lg">

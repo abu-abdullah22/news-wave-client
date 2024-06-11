@@ -19,6 +19,7 @@ import Admin from "../Pages/Dashboard/Admin";
 import UpdateArticle from "../Pages/user/UpdateArticle";
 import Subscription from "../Premium/Subscription";
 import Payment from "../Premium/Payment";
+import MyProfile from "../Pages/user/MyProfile";
 
 
 const router = createBrowserRouter([
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: '/payment',
         element: <PrivateRoute><Payment></Payment></PrivateRoute>
+      },
+      {
+        path: '/profile',
+        element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
       }
     ]
   },
