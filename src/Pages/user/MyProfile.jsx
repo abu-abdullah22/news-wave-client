@@ -15,18 +15,36 @@ const MyProfile = () => {
 
     const onSubmit = async (data) => {
         try {
-            await updateUserProfile(data.name, data.photoURL);
-            const response = await axiosSecure.patch(`/users/${user.email}`, data);
+            // Fetch the current user data from the database
+            const currentUserResponse = await axiosSecure.get(`/users/${user.email}`);
+            const currentUser = currentUserResponse.data;
+
+            // Use the existing photo if no new one is provided
+            const updatedPhoto = data.photoURL || currentUser.photo;
+
+            // Update the user profile in Firebase Auth
+            await updateUserProfile(data.name, updatedPhoto);
+
+            // Prepare the updated user data for the database update
+            const updatedUserData = {
+                name: data.name,
+                photo: updatedPhoto, // Update the correct field name
+            };
+
+            // Update the user data in the database
+            const response = await axiosSecure.patch(`/users/${user.email}`, updatedUserData);
             if (response.data) {
+                // Update the user context
                 setUser({
                     ...user,
-                    ...data,
+                    displayName: data.name,
+                    photoURL: updatedPhoto,
                 });
-                toast.success("Your profile has been updated successfully!")
+                toast.success("Your profile has been updated successfully!");
             }
         } catch (error) {
             console.error('Error updating profile', error);
-            toast.error('Error updating profile')
+            toast.error('Error updating profile');
         }
     };
 
@@ -53,7 +71,6 @@ const MyProfile = () => {
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                 </div>
-             
                 <button
                     type="submit"
                     className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"

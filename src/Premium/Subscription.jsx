@@ -31,9 +31,9 @@ const SubscriptionPage = () => {
         >
           <option value="">Select Subscription Plan and Period</option>
           <optgroup label="Premium Individual">
-            <option value="Premium Individual - 1 minute">1 Minute - $0</option>
-            <option value="Premium Individual - 5 days">5 Days - $0</option>
-            <option value="Premium Individual - 30 days">30 Days - $0</option>
+            <option value="Premium Individual - 1 minute">1 Minute - $1</option>
+            <option value="Premium Individual - 5 days">5 Days - $5</option>
+            <option value="Premium Individual - 30 days">30 Days - $10</option>
           </optgroup>
           <optgroup label="Premium Duo">
             <option value="Premium Duo - 1 minute">1 Minute - $1.5</option>
