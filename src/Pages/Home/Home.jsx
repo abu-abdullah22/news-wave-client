@@ -3,10 +3,13 @@ import AllPublisher from "./AllPublisher";
 import SubscriptionPlans from "./SubscriptionPlans";
 import TrendingArticles from "./TrendingArticles";
 import SubscriptionModal from "./SubscriptionModal";
+import usePremium from "../../Hooks/usePremium";
+import Statistics from "./Statistics";
 
 
 const Home = () => {
     const [showModal, setShowModal] = useState(false);
+    const [isPremium] = usePremium();
 
     useEffect(() => {
       const timer = setTimeout(() => {
@@ -15,12 +18,14 @@ const Home = () => {
   
       return () => clearTimeout(timer);
     }, []);
+
     return (
         <div>
             <TrendingArticles></TrendingArticles>
             <AllPublisher></AllPublisher>
             <SubscriptionPlans></SubscriptionPlans>
-            <SubscriptionModal showModal={showModal} setShowModal={setShowModal} />
+            <Statistics></Statistics>
+            {!isPremium && <SubscriptionModal showModal={showModal} setShowModal={setShowModal} />}
         </div>
     );
 };

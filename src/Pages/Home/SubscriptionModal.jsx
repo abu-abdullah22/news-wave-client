@@ -16,7 +16,7 @@ const SubscriptionModal = ({ showModal, setShowModal }) => {
         </Link>
         <button
           onClick={() => setShowModal(false)}
-          className="mt-4 bg-blue-400 p-2 rounded-lg text-white ml-2 hover:text-gray-700"
+          className="mt-4 bg-blue-500 p-2 rounded-lg text-white ml-2 hover:bg-blue-700"
         >
           Close
         </button>

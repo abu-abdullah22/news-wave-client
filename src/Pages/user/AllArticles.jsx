@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useState } from "react";
+import usePremium from "../../Hooks/usePremium";
 
 const AllArticles = () => {
     const axiosSecure = useAxiosSecure();
     const [searchTitle, setSearchTitle] = useState('');
+    const [isPremium] = usePremium();
     const [filterParams, setFilterParams] = useState({
         publisher: '',
         tags: ''
@@ -105,7 +107,7 @@ const AllArticles = () => {
                         <p className="text-sm font-medium text-gray-600 mb-4">{article.publisher}</p>
                         <p className="text-gray-700 mb-4">{article.description.slice(0, 200)}...</p>
                         <Link to={`/article/${article._id}`}>
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                            <button disabled={!isPremium && article.premium} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
                                 Read More
                             </button>
                         </Link>
