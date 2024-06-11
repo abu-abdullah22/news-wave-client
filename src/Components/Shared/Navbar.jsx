@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useAdmin from "../../Hooks/useAdmin";
 
+
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,18 +40,18 @@ const Navbar = () => {
                         <li className="flex">
                             <NavLink to={'/allArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>All Articles</NavLink>
                         </li>
-                        <li className="flex">
+                      { user && <li className="flex">
                             <NavLink to={'/subscription'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Subscription</NavLink>
-                        </li>
+                        </li>}
                        {user && isAdmin &&  <li className="flex">
                             <NavLink to={'/dashboard/admin'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Dashboard</NavLink>
                         </li>}
                         { user && <li className="flex">
                             <NavLink to={'/myArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>My Articles</NavLink>
                         </li>}
-                        <li className="flex">
+                      { user &&  <li className="flex">
                             <NavLink to={'/premiumArticles'} className={({ isActive }) => isActive ? "flex items-center px-4 -mb-1 text-[#FFAD21]" : "flex items-center px-4 -mb-1"}>Premium Articles</NavLink>
-                        </li>
+                        </li>}
                     </ul>
                 </div>
                 <div className="items-center flex-shrink-0 hidden lg:flex">
