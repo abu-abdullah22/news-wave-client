@@ -8,10 +8,6 @@ Welcome to NewsWave, the ultimate platform for staying updated with the latest n
 - **Email:** fahimchowdhury@gmail.com
 - **Password:** 1234Gh
 
-## Live Site URL
-
-[NewsWave Live Site](https://news-wave-3a5c6.web.app/)
-
 ## Features
 
 1. **All Articles Page**
