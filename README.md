@@ -51,9 +51,12 @@ To get started with NewsWave, visit the [live site](https://news-wave-3a5c6.web.
 To run the project locally, follow these steps:
 
 1. **Clone the Repository**
+   ```bash
    git clone https://github.com/your-username/newswave.git
    cd newswave
 2. **Install npm**
+   ```bash
    npm install
 3. **Run locally** 
+   ```bash
    npm run dev
