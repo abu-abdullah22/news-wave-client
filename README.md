@@ -8,6 +8,16 @@ Welcome to NewsWave, the ultimate platform for staying updated with the latest n
 - **Email:** fahimchowdhury@gmail.com
 - **Password:** 1234Gh
 
+**Technology Used**:
+- React JS
+- Tailwind CSS with DaisyUI and Mamaba UI
+- Firebase
+- Express JS
+- JWT
+- MongoDB
+- Stripe
+
+
 ## Features
 
 1. **All Articles Page**
