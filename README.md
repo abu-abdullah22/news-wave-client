@@ -46,8 +46,14 @@ Welcome to NewsWave, the ultimate platform for staying updated with the latest n
 
 To get started with NewsWave, visit the [live site](https://news-wave-3a5c6.web.app/) and log in with the admin credentials provided above.
 
-For further assistance, feel free to reach out to our support team.
+## Running the Project Locally
 
----
+To run the project locally, follow these steps:
 
-Thank you for using NewsWave!
+1. **Clone the Repository**
+   git clone https://github.com/your-username/newswave.git
+   cd newswave
+2. **Install npm**
+   npm install
+3. **Run locally** 
+   npm run dev
