@@ -10,7 +10,7 @@ Welcome to NewsWave, the ultimate platform for staying updated with the latest n
 
 **Technology Used**:
 - React JS
-- Tailwind CSS with DaisyUI and Mamaba UI
+- Tailwind CSS with DaisyUI and Mamba UI
 - Firebase
 - Express JS
 - JWT
