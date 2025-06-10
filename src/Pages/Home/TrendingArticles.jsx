@@ -31,10 +31,10 @@ const TrendingArticles = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 10,
     autoplay: true,
     arrows: false,
-    autoplayspeed: 1,
+    autoplayspeed: 500,
     responsive: [
       {
         breakpoint: 1024,
@@ -68,7 +68,7 @@ const TrendingArticles = () => {
               <div className="p-4">
                 <h3 className="text-xl font-semibold">{article.title.slice(0,45)}...</h3>
                 <p className="text-gray-600 font-medium">By {article.author_name}</p>
-                <p className="text-gray-700">{article.description.substring(0, 100)}...</p>
+                <p className="text-gray-700">{article.description.substring(0, 75)}...</p>
                 <Link to={`/article/${article._id}`}>
                   <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-5 transition">Read More</button>
                 </Link>

@@ -5,8 +5,7 @@ import TrendingArticles from "./TrendingArticles";
 import SubscriptionModal from "./SubscriptionModal";
 import usePremium from "../../Hooks/usePremium";
 import Statistics from "./Statistics";
-import UpcomingEvents from "./UpcomingEvents";
-import FeaturedQuiz from './FeaturedQuiz'
+
 
 
 
@@ -28,8 +27,7 @@ const Home = () => {
             <AllPublisher></AllPublisher>
             <SubscriptionPlans></SubscriptionPlans>
             <Statistics></Statistics>
-            <UpcomingEvents></UpcomingEvents>
-            <FeaturedQuiz></FeaturedQuiz>
+          
             {!isPremium && <SubscriptionModal showModal={showModal} setShowModal={setShowModal} />}
         </div>
     );
