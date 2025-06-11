@@ -18,7 +18,7 @@ const AllPublisher = () => {
 
   return (
     <div className="overflow-hidden py-10 bg-gray-100">
-      <h2 className="text-3xl text-center font-bold mb-10">All Publishers</h2>
+      <h2 className="text-4xl text-center font-bold mb-10 dark:text-black">All Publishers</h2>
 
       <motion.div
         className="flex w-max gap-6 px-4"

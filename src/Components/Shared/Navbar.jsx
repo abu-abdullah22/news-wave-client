@@ -26,7 +26,7 @@ const Navbar = () => {
     };
 
     return (
-        <header className="p-4 bg-[#2C3E50] text-white dark:bg-gray-100 dark:text-gray-800">
+        <header className="p-4 bg-[#2C3E50] text-white ">
             <div className="container flex justify-between h-16 mx-auto">
                 <div className="flex">
                     <Link to={'/'} className="flex items-center p-2">

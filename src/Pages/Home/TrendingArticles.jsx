@@ -31,10 +31,10 @@ const TrendingArticles = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 10,
+    slidesToScroll: 1,
     autoplay: true,
     arrows: false,
-    autoplayspeed: 500,
+    autoplayspeed: 1,
     responsive: [
       {
         breakpoint: 1024,
@@ -59,18 +59,18 @@ const TrendingArticles = () => {
 
   return (
     <div className="container mx-auto my-20 p-4">
-      <h2 className="text-3xl font-bold mb-4 text-center md:text-left">Trending Articles</h2>
+      <h2 className="text-4xl font-bold mb-4 text-center md:text-left">Trending Articles</h2>
       <Slider {...settings}>
         {articles.map((article) => (
           <div key={article._id} className="p-2">
             <div className="bg-white h-[400px] rounded-lg shadow-lg overflow-hidden">
               <img src={article.image} alt={article.title} className="w-full h-48 object-cover" />
               <div className="p-4">
-                <h3 className="text-xl font-semibold">{article.title.slice(0,45)}...</h3>
+                <h3 className="text-xl font-semibold dark:text-black">{article.title.slice(0,45)}...</h3>
                 <p className="text-gray-600 font-medium">By {article.author_name}</p>
                 <p className="text-gray-700">{article.description.substring(0, 75)}...</p>
                 <Link to={`/article/${article._id}`}>
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-5 transition">Read More</button>
+                  <button className="bg-gradient-to-r from-purple-900 to-pink-900 hover:opacity-90 text-white font-semibold py-2 px-3 mt-4 rounded shadow-md transition duration-200 ">Read More</button>
                 </Link>
               </div>
             </div>
